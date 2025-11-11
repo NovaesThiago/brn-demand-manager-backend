@@ -12,12 +12,12 @@ export class ActionRepository {
   }
 
   getByDemand(demandId: string) {
-    return prisma.action.findMany({
-        where: { demandId },
-        include: { demand: true },
-        orderBy: { createdAt: 'asc' },
-    });
-  }
+  return prisma.action.findMany({
+    where: { demandId: Number(demandId) },
+    include: { demand: true },
+    orderBy: { createdAt: 'asc' },
+  });
+}
 
   create(data: any) {
     return prisma.action.create({ data });

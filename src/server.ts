@@ -17,14 +17,15 @@ app.use('/demands', demandRoutes);
 app.use('/actions', actionRoutes);
 
 app.get('/provedores', async (req, res) => {
-  const provedores = await prisma.provedor.findMany();
+  const provedores = await prisma.provider.findMany();
   res.json(provedores);
 });
 
 app.post('/provedores', async (req, res) => {
-  const { nomeFantasia, nomeResponsavel, contato } = req.body;
-  const novo = await prisma.provedor.create({
-    data: { nomeFantasia, nomeResponsavel, contato },
+  const { name, email } = req.body;
+
+  const novo = await prisma.provider.create({
+    data: { name, email },
   });
   res.json(novo);
 });
