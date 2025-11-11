@@ -41,4 +41,15 @@ export class ActionController {
     await this.service.delete(Number(req.params.id));
     res.status(204).send();
   };
+
+  getByDemand = async (req: Request, res: Response) => {
+  const { demandId } = req.query;
+
+  if (!demandId || typeof demandId !== 'string') {
+    return res.status(400).json({ message: 'Parâmetro demandId é obrigatório e deve ser uma string' });
+  }
+
+  const actions = await this.service.getByDemand(demandId);
+  res.json(actions);
+ };
 }

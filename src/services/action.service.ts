@@ -11,6 +11,10 @@ export class ActionService {
     return this.repo.getById(id);
   }
 
+  getByDemand(demandId: string) {
+    return this.repo.getByDemand(demandId);
+  }
+
   create(data: any) {
     return this.repo.create(data);
   }
