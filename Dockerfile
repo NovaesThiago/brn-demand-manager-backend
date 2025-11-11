@@ -23,11 +23,8 @@ RUN npm install --omit=dev
 
 COPY prisma ./prisma
 COPY --from=builder /app/dist ./dist
-
-# ✅ Gera o Prisma Client na imagem final
-RUN npx prisma generate
-
-# COPY .env .env
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.prisma ./.prisma
 
 EXPOSE 3000
 

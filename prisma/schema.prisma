@@ -1,10 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,8 +11,8 @@ model Provider {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
-  demands   Demand[]
   createdAt DateTime @default(now())
+  demands   Demand[]
 }
 
 model Demand {
@@ -27,9 +20,9 @@ model Demand {
   title       String
   description String
   providerId  Int
-  provider    Provider @relation(fields: [providerId], references: [id])
-  actions     Action[]
   createdAt   DateTime @default(now())
+  actions     Action[]
+  provider    Provider @relation(fields: [providerId], references: [id])
 }
 
 model Action {
@@ -37,6 +30,6 @@ model Action {
   label     String
   done      Boolean  @default(false)
   demandId  Int
-  demand    Demand   @relation(fields: [demandId], references: [id])
   createdAt DateTime @default(now())
+  demand    Demand   @relation(fields: [demandId], references: [id])
 }
