@@ -19,25 +19,30 @@ router.delete('/:id', controller.delete);
  *       - Providers
  *     responses:
  *       200:
- *         description: Lista de providers
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name:
- *                     type: string
- *                   email:
- *                     type: string
+ *         description: Lista de providers retornada com sucesso
  */
-router.get('/providers', async (req, res) => {
-  // lógica para listar providers
-  res.json([{ id: 1, name: 'Thiago', email: 'thiago@example.com' }]);
-});
+router.get('/', controller.getAll);
+
+/**
+ * @openapi
+ * /providers/{id}:
+ *   get:
+ *     summary: Busca um provider pelo ID
+ *     tags:
+ *       - Providers
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Provider encontrado
+ *       404:
+ *         description: Provider não encontrado
+ */
+router.get('/:id', controller.getById);
 
 /**
  * @openapi
@@ -52,6 +57,9 @@ router.get('/providers', async (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - name
+ *               - email
  *             properties:
  *               name:
  *                 type: string
@@ -61,9 +69,59 @@ router.get('/providers', async (req, res) => {
  *       201:
  *         description: Provider criado com sucesso
  */
-router.post('/providers', async (req, res) => {
-  // lógica para criar provider
-  res.status(201).json({ message: 'Provider criado' });
-});
+router.post('/', controller.create);
+
+/**
+ * @openapi
+ * /providers/{id}:
+ *   put:
+ *     summary: Atualiza um provider existente
+ *     tags:
+ *       - Providers
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Provider atualizado com sucesso
+ *       404:
+ *         description: Provider não encontrado
+ */
+router.put('/:id', controller.update);
+
+/**
+ * @openapi
+ * /providers/{id}:
+ *   delete:
+ *     summary: Remove um provider
+ *     tags:
+ *       - Providers
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Provider removido com sucesso
+ *       404:
+ *         description: Provider não encontrado
+ */
+router.delete('/:id', controller.delete);
 
 export default router;
