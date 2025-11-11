@@ -1,0 +1,31 @@
+import { Request, Response } from 'express';
+import { ActionService } from '../services/action.service';
+
+export class ActionController {
+  private service = new ActionService();
+
+  getAll = async (req: Request, res: Response) => {
+    const actions = await this.service.getAll();
+    res.json(actions);
+  };
+
+  getById = async (req: Request, res: Response) => {
+    const action = await this.service.getById(Number(req.params.id));
+    res.json(action);
+  };
+
+  create = async (req: Request, res: Response) => {
+    const action = await this.service.create(req.body);
+    res.status(201).json(action);
+  };
+
+  update = async (req: Request, res: Response) => {
+    const action = await this.service.update(Number(req.params.id), req.body);
+    res.json(action);
+  };
+
+  delete = async (req: Request, res: Response) => {
+    await this.service.delete(Number(req.params.id));
+    res.status(204).send();
+  };
+}
