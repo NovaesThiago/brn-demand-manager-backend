@@ -1,5 +1,18 @@
 import { Request, Response } from 'express';
 import { DemandService } from '../services/demand.service';
+import { createDemandSchema } from '../schemas/demand.schema';
+
+const demandService = new DemandService();
+
+export const createProvider = async (req: Request, res: Response, next: Function) => {
+  try {
+    const validated = createDemandSchema.parse(req.body);
+    const demand = await demandService.create(validated);
+    res.status(201).json(demand);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export class DemandController {
   private service = new DemandService();

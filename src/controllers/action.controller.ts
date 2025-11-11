@@ -1,5 +1,18 @@
 import { Request, Response } from 'express';
 import { ActionService } from '../services/action.service';
+import { createActionSchema } from '../schemas/action.schema';
+
+const actionService = new ActionService();
+
+export const createProvider = async (req: Request, res: Response, next: Function) => {
+  try {
+    const validated = createActionSchema.parse(req.body);
+    const action = await actionService.create(validated);
+    res.status(201).json(action);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export class ActionController {
   private service = new ActionService();
