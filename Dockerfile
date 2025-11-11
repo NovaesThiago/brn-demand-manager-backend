@@ -27,7 +27,7 @@ COPY --from=builder /app/dist ./dist
 # ✅ Gera o Prisma Client na imagem final
 RUN npx prisma generate
 
-COPY .env .env
+# COPY .env .env
 
 EXPOSE 3000
 
