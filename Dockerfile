@@ -1,26 +1,34 @@
-# Imagem base
-FROM node:18
+# Etapa 1: build da aplicação
+FROM node:20-alpine AS builder
 
-# Diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos
 COPY package*.json ./
+RUN npm install
+
 COPY tsconfig.json ./
 COPY prisma ./prisma
 COPY src ./src
 
-# Instalar dependências
-RUN npm install
+RUN npx prisma generate
+RUN npx tsc
 
-# Gerar cliente Prisma
+# Etapa 2: imagem final
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install --omit=dev
+
+COPY prisma ./prisma
+COPY --from=builder /app/dist ./dist
+
+# ✅ Gera o Prisma Client na imagem final
 RUN npx prisma generate
 
-# Compilar TypeScript
-RUN npm run build
+COPY .env .env
 
-# Expor porta
 EXPOSE 3000
 
-# Rodar app
 CMD ["node", "dist/index.js"]
