@@ -11,7 +11,7 @@ COPY prisma ./prisma
 COPY src ./src
 
 RUN npx prisma generate
-RUN npx tsc
+RUN npm run build
 
 # Etapa 2: imagem final
 FROM node:20-alpine
@@ -24,7 +24,6 @@ RUN npm install --omit=dev
 COPY prisma ./prisma
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.prisma ./.prisma
 
 EXPOSE 3000
 
