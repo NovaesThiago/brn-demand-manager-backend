@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start": "prisma generate",
+    "start": "node dist/index.js",
     "build": "tsc",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "docker:dev": "npm run db:generate && npm run dev",
+    "docker:start": "npm run db:generate && npm run db:push && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
