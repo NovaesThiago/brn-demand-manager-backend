@@ -1,21 +1,31 @@
+# docker-compose.prod.yml (sugestão)
 version: '3.8'
 
 services:
   app:
-    build: .
+    build: 
+      context: .
+      target: builder  # Ou ajustar para produção
     ports:
       - '3000:3000'
-    env_file:
-      - .env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/brn_demand_manager
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    restart: unless-stopped
 
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: postgres  # MUDAR EM PRODUÇÃO!
       POSTGRES_DB: brn_demand_manager
-    ports:
-      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Remover ports em produção ou usar porta diferente
+
+volumes:
+  postgres_data:
