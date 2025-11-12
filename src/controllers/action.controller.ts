@@ -4,7 +4,7 @@ import { createActionSchema } from '../schemas/action.schema';
 
 const actionService = new ActionService();
 
-export const createProvider = async (req: Request, res: Response, next: Function) => {
+export const createAction = async (req: Request, res: Response, next: Function) => {
   try {
     const validated = createActionSchema.parse(req.body);
     const action = await actionService.create(validated);

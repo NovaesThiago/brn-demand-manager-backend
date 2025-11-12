@@ -4,7 +4,7 @@ import { createDemandSchema } from '../schemas/demand.schema';
 
 const demandService = new DemandService();
 
-export const createProvider = async (req: Request, res: Response, next: Function) => {
+export const createDemand = async (req: Request, res: Response, next: Function) => {
   try {
     const validated = createDemandSchema.parse(req.body);
     const demand = await demandService.create(validated);
