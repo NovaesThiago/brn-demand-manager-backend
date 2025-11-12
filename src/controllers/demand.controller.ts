@@ -64,4 +64,19 @@ export class DemandController {
       res.status(500).json({ message: 'Erro interno do servidor' });
     }
   };
+
+  getWithFilters = async (req: Request, res: Response) => {
+    try {
+      const { status, providerId } = req.query;
+      
+      const filters: any = {};
+      if (status && typeof status === 'string') filters.status = status;
+      if (providerId && !isNaN(Number(providerId))) filters.providerId = Number(providerId);
+
+      const demands = await this.service.getAll(filters);
+      res.json(demands);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+  };
 }
