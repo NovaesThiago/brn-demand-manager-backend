@@ -11,13 +11,13 @@ export class ActionRepository {
     return prisma.action.findUnique({ where: { id }, include: { demand: true } });
   }
 
-  getByDemand(demandId: string) {
-  return prisma.action.findMany({
-    where: { demandId: Number(demandId) },
-    include: { demand: true },
-    orderBy: { createdAt: 'asc' },
-  });
-}
+  getByDemand(demandId: number) {  // ✅ MUDAR para number
+    return prisma.action.findMany({
+      where: { demandId: demandId }, // ✅ REMOVER Number()
+      include: { demand: true },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
 
   create(data: any) {
     return prisma.action.create({ data });

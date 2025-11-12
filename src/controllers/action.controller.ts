@@ -43,13 +43,27 @@ export class ActionController {
   };
 
   getByDemand = async (req: Request, res: Response) => {
-  const { demandId } = req.query;
+    try {
+      const { demandId } = req.query;
 
-  if (!demandId || typeof demandId !== 'string') {
-    return res.status(400).json({ message: 'Parâmetro demandId é obrigatório e deve ser uma string' });
+      if (!demandId) {
+        return res.status(400).json({ 
+          message: 'Parâmetro demandId é obrigatório' 
+        });
+      }
+
+      // ✅ Converter para número e validar
+      const demandIdNumber = Number(demandId);
+      if (isNaN(demandIdNumber)) {
+        return res.status(400).json({ 
+          message: 'demandId deve ser um número válido' 
+        });
+      }
+
+      const actions = await this.service.getByDemand(demandIdNumber);
+      res.json(actions);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro interno do servidor' });
+    }
   }
-
-  const actions = await this.service.getByDemand(demandId);
-  res.json(actions);
- };
 }

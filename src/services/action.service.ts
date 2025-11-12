@@ -11,7 +11,7 @@ export class ActionService {
     return this.repo.getById(id);
   }
 
-  getByDemand(demandId: string) {
+  getByDemand(demandId: number) {  // ✅ MUDAR para number
     return this.repo.getByDemand(demandId);
   }
 

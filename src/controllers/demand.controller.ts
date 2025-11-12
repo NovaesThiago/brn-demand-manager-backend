@@ -1,44 +1,67 @@
 import { Request, Response } from 'express';
 import { DemandService } from '../services/demand.service';
-import { createDemandSchema } from '../schemas/demand.schema';
-
-const demandService = new DemandService();
-
-export const createDemand = async (req: Request, res: Response, next: Function) => {
-  try {
-    const validated = createDemandSchema.parse(req.body);
-    const demand = await demandService.create(validated);
-    res.status(201).json(demand);
-  } catch (error) {
-    next(error);
-  }
-};
+import { createDemandSchema, updateDemandSchema } from '../schemas/demand.schema'; // Import atualizado
 
 export class DemandController {
   private service = new DemandService();
 
   getAll = async (req: Request, res: Response) => {
-    const demands = await this.service.getAll();
-    res.json(demands);
+    try {
+      const demands = await this.service.getAll();
+      res.json(demands);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro interno do servidor' });
+    }
   };
 
   getById = async (req: Request, res: Response) => {
-    const demand = await this.service.getById(Number(req.params.id));
-    res.json(demand);
+    try {
+      const demand = await this.service.getById(Number(req.params.id));
+      if (!demand) {
+        return res.status(404).json({ message: 'Demanda não encontrada' });
+      }
+      res.json(demand);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro interno do servidor' });
+    }
   };
 
   create = async (req: Request, res: Response) => {
-    const demand = await this.service.create(req.body);
-    res.status(201).json(demand);
+    try {
+      const validated = createDemandSchema.parse(req.body);
+      const demand = await this.service.create(validated);
+      res.status(201).json(demand);
+    } catch (error) {
+      res.status(400).json({ message: 'Dados inválidos', error });
+    }
   };
 
   update = async (req: Request, res: Response) => {
-    const demand = await this.service.update(Number(req.params.id), req.body);
-    res.json(demand);
+    try {
+      const validated = updateDemandSchema.parse(req.body);
+      const demand = await this.service.update(Number(req.params.id), validated);
+      
+      if (!demand) {
+        return res.status(404).json({ message: 'Demanda não encontrada' });
+      }
+      
+      res.json(demand);
+    } catch (error) {
+      res.status(400).json({ message: 'Dados inválidos', error });
+    }
   };
 
   delete = async (req: Request, res: Response) => {
-    await this.service.delete(Number(req.params.id));
-    res.status(204).send();
+    try {
+      const deleted = await this.service.delete(Number(req.params.id));
+      
+      if (!deleted) {
+        return res.status(404).json({ message: 'Demanda não encontrada' });
+      }
+      
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ message: 'Erro interno do servidor' });
+    }
   };
 }
