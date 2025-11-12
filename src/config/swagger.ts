@@ -1,5 +1,5 @@
 import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express'; // ✅ Import correto
+import swaggerUi from 'swagger-ui-express'; // Import correto
 import { Express } from 'express'
 
 const options = {
@@ -24,7 +24,7 @@ const options = {
         description: 'Servidor de Desenvolvimento'
       },
     ],
-    tags: [  // ✅ ADICIONAR TAGS PARA ORGANIZAÇÃO
+    tags: [  // TAGS PARA ORGANIZAÇÃO
       {
         name: 'Providers',
         description: 'Operações relacionadas a provedores'
@@ -48,5 +48,4 @@ export function setupSwagger(app: Express) {
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
-// ✅ ADICIONE ESTA LINHA NO FINAL DO ARQUIVO
 export {};
