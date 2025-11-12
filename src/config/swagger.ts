@@ -4,7 +4,15 @@ const options = {
     info: {
       title: 'BRN Demand Manager API',
       version: '1.0.0',
-      description: 'Sistema interno para gestão de demandas técnicas de provedores de internet',
+      description: `Sistema interno para gestão centralizada de demandas técnicas de provedores de internet.
+  
+      **Funcionalidades principais:**
+      - Cadastro de provedores atendidos
+      - Registro de demandas técnicas (Diagnóstico, Manutenção, Configuração, etc.)
+      - Acompanhamento de status e histórico de ações
+      - Filtros por status e provedor
+
+      **Cenário:** Consultoria especializada em redes que oferece suporte técnico para diversos ISPs.`,
     },
     servers: [
       {
