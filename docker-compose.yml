@@ -3,12 +3,11 @@ services:
   app:
     build: .
     ports:
-      - '3001:3000'
+      - '3000:3000'
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgresql://postgres:OLdJTb1Ly3bkwzl4@db.upgkvwhkteiektamxuhm.supabase.co:5432/postgres
-    network_mode: "host"
+      - DIRECT_URL=postgresql://postgres.upgkvwhkteiektamxuhm:OLdJTb1Ly3bkwzl4@aws-1-us-east-2.pooler.supabase.com:5432/postgres
     restart: unless-stopped
 
 # db:
