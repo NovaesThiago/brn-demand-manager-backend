@@ -8,11 +8,13 @@ datasource db {
 }
 
 model Provider {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-  demands   Demand[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  contact     String?  // ADICIONAR (opcional)
+  responsible String?  // ADICIONAR (opcional)
+  createdAt   DateTime @default(now())
+  demands     Demand[]
 }
 
 model Demand {
