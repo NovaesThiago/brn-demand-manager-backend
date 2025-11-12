@@ -11,39 +11,26 @@ const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
+// ✅ MIDDLEWARES (SEM DUPLICAÇÕES)
 app.use(cors());
 app.use(express.json());
 app.use(errorHandler);
+
+// ✅ ROTAS (SEM DUPLICAÇÕES)
 app.use('/providers', providerRoutes);
 app.use('/demands', demandRoutes);
 app.use('/actions', actionRoutes);
-app.use(express.json());
-app.use(providerRoutes);
 
+// ✅ SWAGGER
 setupSwagger(app);
 
+// ✅ ROTA HEALTH CHECK
+app.get('/', (req, res) => {
+  res.send('Servidor BRN Demand Manager rodando!');
+});
+
+// ✅ APENAS UM app.listen()
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
   console.log(`Swagger disponível em http://localhost:${PORT}/docs`);
-});
-
-
-app.get('/provedores', async (req, res) => {
-  const provedores = await prisma.provider.findMany();
-  res.json(provedores);
-});
-
-app.post('/provedores', async (req, res) => {
-  const { name, email } = req.body;
-
-  const novo = await prisma.provider.create({
-    data: { name, email },
-  });
-  res.json(novo);
-});
-
-// Você pode seguir com rotas para demandas e ações técnicas aqui
-
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
 });

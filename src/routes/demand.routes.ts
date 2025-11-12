@@ -4,10 +4,12 @@ import { DemandController } from '../controllers/demand.controller';
 const router = Router();
 const controller = new DemandController();
 
-// ✅ Rota com filtros (atualiza a rota GET existente)
+// ✅ ADICIONAR TODAS AS ROTAS FALTANTES:
 router.get('/', controller.getWithFilters);
-
-// ... outras rotas mantidas ...
+router.get('/:id', controller.getById);     // ✅ FALTAVA
+router.post('/', controller.create);        // ✅ FALTAVA - ESTA É A IMPORTANTE!
+router.put('/:id', controller.update);      // ✅ FALTAVA
+router.delete('/:id', controller.delete);   // ✅ FALTAVA
 
 /**
  * @openapi
@@ -21,7 +23,7 @@ router.get('/', controller.getWithFilters);
  *         required: false
  *         schema:
  *           type: string
- *           enum: [Pendente, Em Andamento, Concluída, Cancelada]
+ *           enum: [PENDENTE, EM_ANDAMENTO, CONCLUIDA, CANCELADA]  // ✅ CORRIGIR PARA UPPERCASE
  *       - name: providerId
  *         in: query
  *         required: false
@@ -58,12 +60,12 @@ router.get('/', controller.getWithFilters);
  *                 example: "Cliente reporta lentidão na rede durante horário de pico"
  *               type:
  *                 type: string
- *                 enum: [Diagnóstico, Manutenção, Configuração, Instalação, Outro]
- *                 example: "Diagnóstico"
+ *                 enum: [DIAGNOSTICO, MANUTENCAO, CONFIGURACAO, INSTALACAO, OUTRO]  // ✅ UPPERCASE
+ *                 example: "DIAGNOSTICO"
  *               status:
  *                 type: string
- *                 enum: [Pendente, Em Andamento, Concluída, Cancelada]
- *                 example: "Pendente"
+ *                 enum: [PENDENTE, EM_ANDAMENTO, CONCLUIDA, CANCELADA]  // ✅ UPPERCASE
+ *                 example: "PENDENTE"
  *               providerId:
  *                 type: integer
  *                 example: 1
