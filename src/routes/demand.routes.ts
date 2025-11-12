@@ -71,3 +71,5 @@ router.get('/', controller.getWithFilters);
  *       201:
  *         description: Demanda criada com sucesso
  */
+
+export default router;

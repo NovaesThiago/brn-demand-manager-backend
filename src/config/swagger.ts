@@ -1,3 +1,7 @@
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express'; // ✅ Import correto
+import { Express } from 'express'
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -37,3 +41,12 @@ const options = {
   },
   apis: ['./src/routes/*.ts'],
 };
+
+const swaggerSpec = swaggerJSDoc(options);
+
+export function setupSwagger(app: Express) {
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
+
+// ✅ ADICIONE ESTA LINHA NO FINAL DO ARQUIVO
+export {};
