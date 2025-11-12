@@ -1,4 +1,5 @@
 import { ProviderRepository } from '../repositories/provider.repository';
+import { CreateProviderInput, UpdateProviderInput } from '../schemas/provider.schema';
 
 export class ProviderService {
   private repo = new ProviderRepository();
@@ -11,11 +12,11 @@ export class ProviderService {
     return this.repo.getById(id);
   }
 
-  create(data: any) {
+  create(data: CreateProviderInput) {  // ✅ Tipagem específica
     return this.repo.create(data);
   }
 
-  update(id: number, data: any) {
+  update(id: number, data: UpdateProviderInput) {  // ✅ Tipagem específica
     return this.repo.update(id, data);
   }
 

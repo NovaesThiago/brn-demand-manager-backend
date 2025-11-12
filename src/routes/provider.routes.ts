@@ -4,22 +4,15 @@ import { ProviderController } from '../controllers/provider.controller';
 const router = Router();
 const controller = new ProviderController();
 
-router.get('/', controller.getAll);
-router.get('/:id', controller.getById);
-router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.delete);
-
 /**
  * @openapi
  * /providers:
  *   get:
- *     summary: Lista todos os providers
- *     tags:
- *       - Providers
+ *     summary: Lista todos os provedores
+ *     tags: [Providers]
  *     responses:
  *       200:
- *         description: Lista de providers retornada com sucesso
+ *         description: Lista de provedores retornada com sucesso
  */
 router.get('/', controller.getAll);
 
@@ -27,9 +20,8 @@ router.get('/', controller.getAll);
  * @openapi
  * /providers/{id}:
  *   get:
- *     summary: Busca um provider pelo ID
- *     tags:
- *       - Providers
+ *     summary: Busca um provedor pelo ID
+ *     tags: [Providers]
  *     parameters:
  *       - name: id
  *         in: path
@@ -38,9 +30,9 @@ router.get('/', controller.getAll);
  *           type: integer
  *     responses:
  *       200:
- *         description: Provider encontrado
+ *         description: Provedor encontrado
  *       404:
- *         description: Provider não encontrado
+ *         description: Provedor não encontrado
  */
 router.get('/:id', controller.getById);
 
@@ -48,9 +40,8 @@ router.get('/:id', controller.getById);
  * @openapi
  * /providers:
  *   post:
- *     summary: Cria um novo provider
- *     tags:
- *       - Providers
+ *     summary: Cria um novo provedor
+ *     tags: [Providers]
  *     requestBody:
  *       required: true
  *       content:
@@ -60,14 +51,24 @@ router.get('/:id', controller.getById);
  *             required:
  *               - name
  *               - email
+ *               - contact
+ *               - responsible
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "BRNX Fibra"
  *               email:
  *                 type: string
+ *                 example: "contato@brnxfibra.com.br"
+ *               contact:
+ *                 type: string
+ *                 example: "contato@brnxfibra.com.br"
+ *               responsible:
+ *                 type: string
+ *                 example: "João Silva"
  *     responses:
  *       201:
- *         description: Provider criado com sucesso
+ *         description: Provedor criado com sucesso
  */
 router.post('/', controller.create);
 
@@ -75,9 +76,8 @@ router.post('/', controller.create);
  * @openapi
  * /providers/{id}:
  *   put:
- *     summary: Atualiza um provider existente
- *     tags:
- *       - Providers
+ *     summary: Atualiza um provedor existente
+ *     tags: [Providers]
  *     parameters:
  *       - name: id
  *         in: path
@@ -93,13 +93,15 @@ router.post('/', controller.create);
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               contact:
+ *                 type: string
+ *               responsible:
  *                 type: string
  *     responses:
  *       200:
- *         description: Provider atualizado com sucesso
+ *         description: Provedor atualizado com sucesso
  *       404:
- *         description: Provider não encontrado
+ *         description: Provedor não encontrado
  */
 router.put('/:id', controller.update);
 
@@ -107,9 +109,8 @@ router.put('/:id', controller.update);
  * @openapi
  * /providers/{id}:
  *   delete:
- *     summary: Remove um provider
- *     tags:
- *       - Providers
+ *     summary: Remove um provedor
+ *     tags: [Providers]
  *     parameters:
  *       - name: id
  *         in: path
@@ -118,9 +119,9 @@ router.put('/:id', controller.update);
  *           type: integer
  *     responses:
  *       204:
- *         description: Provider removido com sucesso
+ *         description: Provedor removido com sucesso
  *       404:
- *         description: Provider não encontrado
+ *         description: Provedor não encontrado
  */
 router.delete('/:id', controller.delete);
 

@@ -1,18 +1,13 @@
 import { z } from 'zod';
 
-// Schema para criação (já existe)
 export const createProviderSchema = z.object({
   name: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
+  email: z.string().email('Email deve ser válido'), // ✅ ADICIONAR EMAIL
   contact: z.string().min(5, 'Contato deve ter pelo menos 5 caracteres'),
   responsible: z.string().min(3, 'Responsável deve ter pelo menos 3 caracteres'),
 });
 
-// Schema para atualização (PARCIAL - todos os campos opcionais)
-export const updateProviderSchema = z.object({
-  name: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres').optional(),
-  contact: z.string().min(5, 'Contato deve ter pelo menos 5 caracteres').optional(),
-  responsible: z.string().min(3, 'Responsável deve ter pelo menos 3 caracteres').optional(),
-});
+export const updateProviderSchema = createProviderSchema.partial();
 
-// Se quiser ser mais rigoroso, pode usar partial()
-export const updateProviderSchemaPartial = createProviderSchema.partial();
+export type CreateProviderInput = z.infer<typeof createProviderSchema>;
+export type UpdateProviderInput = z.infer<typeof updateProviderSchema>;
