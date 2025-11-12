@@ -32,5 +32,5 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-# ✅ COMANDO CORRIGIDO: Gera Prisma, faz push do schema e inicia a app
+# Gera Prisma, faz push do schema e inicia a app
 CMD ["sh", "-c", "npx prisma db push && npm start"]

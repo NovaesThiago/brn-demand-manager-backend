@@ -4,9 +4,69 @@ const express_1 = require("express");
 const demand_controller_1 = require("../controllers/demand.controller");
 const router = (0, express_1.Router)();
 const controller = new demand_controller_1.DemandController();
-router.get('/', controller.getAll);
-router.get('/:id', controller.getById);
-router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.delete);
+// ✅ Rota com filtros (atualiza a rota GET existente)
+router.get('/', controller.getWithFilters);
+// ... outras rotas mantidas ...
+/**
+ * @openapi
+ * /demands:
+ *   get:
+ *     summary: Lista demandas com filtros opcionais
+ *     tags: [Demands]
+ *     parameters:
+ *       - name: status
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: string
+ *           enum: [Pendente, Em Andamento, Concluída, Cancelada]
+ *       - name: providerId
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Lista de demandas filtradas
+ */
+/**
+ * @openapi
+ * /demands:
+ *   post:
+ *     summary: Cria uma nova demanda
+ *     tags: [Demands]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - description
+ *               - type
+ *               - status
+ *               - providerId
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Diagnóstico de lentidão"
+ *               description:
+ *                 type: string
+ *                 example: "Cliente reporta lentidão na rede durante horário de pico"
+ *               type:
+ *                 type: string
+ *                 enum: [Diagnóstico, Manutenção, Configuração, Instalação, Outro]
+ *                 example: "Diagnóstico"
+ *               status:
+ *                 type: string
+ *                 enum: [Pendente, Em Andamento, Concluída, Cancelada]
+ *                 example: "Pendente"
+ *               providerId:
+ *                 type: integer
+ *                 example: 1
+ *     responses:
+ *       201:
+ *         description: Demanda criada com sucesso
+ */
 exports.default = router;

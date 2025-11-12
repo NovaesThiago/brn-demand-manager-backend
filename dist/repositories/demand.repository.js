@@ -4,11 +4,21 @@ exports.DemandRepository = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class DemandRepository {
-    getAll() {
-        return prisma.demand.findMany({ include: { provider: true, actions: true } });
+    getAll(filters) {
+        return prisma.demand.findMany({
+            where: {
+                ...(filters?.status && { status: filters.status }),
+                ...(filters?.providerId && { providerId: filters.providerId }),
+            },
+            include: { provider: true, actions: true },
+            orderBy: { createdAt: 'desc' }, // ✅ Mais recentes primeiro
+        });
     }
     getById(id) {
-        return prisma.demand.findUnique({ where: { id }, include: { provider: true, actions: true } });
+        return prisma.demand.findUnique({
+            where: { id },
+            include: { provider: true, actions: { orderBy: { createdAt: 'asc' } } }
+        });
     }
     create(data) {
         return prisma.demand.create({ data });

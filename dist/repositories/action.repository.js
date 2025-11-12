@@ -12,7 +12,7 @@ class ActionRepository {
     }
     getByDemand(demandId) {
         return prisma.action.findMany({
-            where: { demandId: Number(demandId) },
+            where: { demandId: demandId }, // ✅ REMOVER Number()
             include: { demand: true },
             orderBy: { createdAt: 'asc' },
         });

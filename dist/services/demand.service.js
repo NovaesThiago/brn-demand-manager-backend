@@ -6,8 +6,8 @@ class DemandService {
     constructor() {
         this.repo = new demand_repository_1.DemandRepository();
     }
-    getAll() {
-        return this.repo.getAll();
+    getAll(filters) {
+        return this.repo.getAll(filters);
     }
     getById(id) {
         return this.repo.getById(id);

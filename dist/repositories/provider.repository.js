@@ -5,10 +5,31 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class ProviderRepository {
     getAll() {
-        return prisma.provider.findMany();
+        return prisma.provider.findMany({
+            include: {
+                demands: {
+                    include: {
+                        actions: true
+                    },
+                    orderBy: { createdAt: 'desc' }
+                }
+            }
+        });
     }
     getById(id) {
-        return prisma.provider.findUnique({ where: { id } });
+        return prisma.provider.findUnique({
+            where: { id },
+            include: {
+                demands: {
+                    include: {
+                        actions: {
+                            orderBy: { createdAt: 'asc' }
+                        }
+                    },
+                    orderBy: { createdAt: 'desc' }
+                }
+            }
+        });
     }
     create(data) {
         return prisma.provider.create({ data });
