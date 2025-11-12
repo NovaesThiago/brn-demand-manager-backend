@@ -35,6 +35,7 @@ Este sistema resolve o problema de gestão informal de demandas (planilhas e e-m
 - **Supabase** - PostgreSQL em nuvem (opcional)
 
 ## 🏗️ Arquitetura do Sistema
+```
 src/
 ├── controllers/ # Lógica das rotas HTTP
 ├── services/ # Regras de negócio e validações
@@ -42,7 +43,7 @@ src/
 ├── routes/ # Definição de endpoints da API
 ├── schemas/ # Schemas de validação com Zod
 └── config/ # Configurações da aplicação
-
+```
 
 ## 📦 Como Executar o Projeto
 
@@ -213,5 +214,6 @@ docker-compose exec app npx prisma studio
 
 - Arquitetura organizada (MVC + Services + Repositories)
 
-### 📄 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para detalhes.
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
