@@ -10,6 +10,9 @@ COPY tsconfig.json ./
 COPY prisma ./prisma
 COPY src ./src
 
+# Gera o cliente do Prisma
+RUN npx prisma generate
+
 RUN npm run build
 
 # Etapa 2: imagem final
@@ -24,6 +27,10 @@ COPY prisma ./prisma
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 
+# Gera Prisma na imagem final também
+RUN npx prisma generate
+
 EXPOSE 3000
 
-CMD ["npm", "start"]
+# ✅ COMANDO CORRIGIDO: Gera Prisma, faz push do schema e inicia a app
+CMD ["sh", "-c", "npx prisma db push && npm start"]
