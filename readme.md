@@ -55,7 +55,7 @@ src/
 
 ```bash
 # 1. Clone o repositório
-git clone <url-do-repositorio>
+git clone <https://github.com/NovaesThiago/brn-demand-manager-backend.git>
 cd brn-demand-manager
 
 # 2. Configure as variáveis de ambiente
