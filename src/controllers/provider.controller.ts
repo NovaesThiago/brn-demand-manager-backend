@@ -1,7 +1,6 @@
-// Exemplo corrigido para ProviderController
 import { Request, Response } from 'express';
 import { ProviderService } from '../services/provider.service';
-import { createProviderSchema, updateProviderSchema } from '../schemas/provider.schema';
+import { createProviderSchema, updateProviderSchema } from '../schemas/provider.schema'; // Import corrigido
 
 export class ProviderController {
   private service = new ProviderService();
@@ -41,6 +40,11 @@ export class ProviderController {
     try {
       const validated = updateProviderSchema.parse(req.body);
       const provider = await this.service.update(Number(req.params.id), validated);
+      
+      if (!provider) {
+        return res.status(404).json({ message: 'Provedor não encontrado' });
+      }
+      
       res.json(provider);
     } catch (error) {
       res.status(400).json({ message: 'Dados inválidos', error });
@@ -49,7 +53,12 @@ export class ProviderController {
 
   delete = async (req: Request, res: Response) => {
     try {
-      await this.service.delete(Number(req.params.id));
+      const deleted = await this.service.delete(Number(req.params.id));
+      
+      if (!deleted) {
+        return res.status(404).json({ message: 'Provedor não encontrado' });
+      }
+      
       res.status(204).send();
     } catch (error) {
       res.status(500).json({ message: 'Erro interno do servidor' });
