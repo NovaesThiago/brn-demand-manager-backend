@@ -1,11 +1,14 @@
 import { z } from 'zod';
 
-// Versão SIMPLES e FUNCIONAL
+// USAR MESMOS VALORES DO PRISMA (UPPERCASE, sem acentos)
+const demandTypes = ['DIAGNOSTICO', 'MANUTENCAO', 'CONFIGURACAO', 'INSTALACAO', 'OUTRO'] as const;
+const demandStatuses = ['PENDENTE', 'EM_ANDAMENTO', 'CONCLUIDA', 'CANCELADA'] as const;
+
 export const createDemandSchema = z.object({
   title: z.string().min(3, 'Título deve ter pelo menos 3 caracteres'),
   description: z.string().min(10, 'Descrição deve ter pelo menos 10 caracteres'),
-  type: z.enum(['Diagnóstico', 'Manutenção', 'Configuração', 'Instalação', 'Outro']),
-  status: z.enum(['Pendente', 'Em Andamento', 'Concluída', 'Cancelada']),
+  type: z.enum(demandTypes),
+  status: z.enum(demandStatuses),
   providerId: z.number().int().positive('ID do provedor é obrigatório'),
 });
 

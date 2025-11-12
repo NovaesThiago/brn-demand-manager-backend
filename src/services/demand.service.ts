@@ -1,10 +1,13 @@
 import { DemandRepository } from '../repositories/demand.repository';
 import { CreateDemandInput, UpdateDemandInput } from '../schemas/demand.schema';
 
+type DemandStatus = 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDA' | 'CANCELADA';
+type DemandType = 'DIAGNOSTICO' | 'MANUTENCAO' | 'CONFIGURACAO' | 'INSTALACAO' | 'OUTRO';
+
 export class DemandService {
   private repo = new DemandRepository();
 
-  getAll(filters?: { status?: string; providerId?: number }) {
+  getAll(filters?: { status?: DemandStatus; providerId?: number }) { // ✅ Usar DemandStatus
     return this.repo.getAll(filters);
   }
 
@@ -12,12 +15,22 @@ export class DemandService {
     return this.repo.getById(id);
   }
 
-  create(data: CreateDemandInput) {  // ✅ Tipagem específica
-    return this.repo.create(data);
+  create(data: CreateDemandInput) {
+    // ✅ Converter strings do Zod para enums do Prisma
+    const prismaData = {
+      ...data,
+      type: data.type as DemandType,
+      status: data.status as DemandStatus
+    };
+    return this.repo.create(prismaData);
   }
 
-  update(id: number, data: UpdateDemandInput) {  // ✅ Tipagem específica
-    return this.repo.update(id, data);
+  update(id: number, data: UpdateDemandInput) {
+    const prismaData: any = { ...data };
+    if (data.type) prismaData.type = data.type as DemandType;
+    if (data.status) prismaData.status = data.status as DemandStatus;
+    
+    return this.repo.update(id, prismaData);
   }
 
   delete(id: number) {
