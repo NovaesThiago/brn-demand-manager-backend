@@ -15,9 +15,9 @@ async function seed() {
       },
     });
 
-    console.log('✅ Provider criado:', provider);
+    console.log('Provider criado:', provider);
   } catch (error) {
-    console.error('❌ Erro ao inserir dados:', error);
+    console.error('Erro ao inserir dados:', error);
   } finally {
     await prisma.$disconnect();
   }
