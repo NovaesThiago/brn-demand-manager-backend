@@ -6,10 +6,10 @@ const controller = new DemandController();
 
 // ✅ ADICIONAR TODAS AS ROTAS FALTANTES:
 router.get('/', controller.getWithFilters);
-router.get('/:id', controller.getById);     // ✅ FALTAVA
-router.post('/', controller.create);        // ✅ FALTAVA - ESTA É A IMPORTANTE!
-router.put('/:id', controller.update);      // ✅ FALTAVA
-router.delete('/:id', controller.delete);   // ✅ FALTAVA
+router.get('/:id', controller.getById);     
+router.post('/', controller.create);       
+router.put('/:id', controller.update);      
+router.delete('/:id', controller.delete);   
 
 /**
  * @openapi
@@ -23,7 +23,7 @@ router.delete('/:id', controller.delete);   // ✅ FALTAVA
  *         required: false
  *         schema:
  *           type: string
- *           enum: [PENDENTE, EM_ANDAMENTO, CONCLUIDA, CANCELADA]  // ✅ CORRIGIR PARA UPPERCASE
+ *           enum: [PENDENTE, EM_ANDAMENTO, CONCLUIDA, CANCELADA]
  *       - name: providerId
  *         in: query
  *         required: false
@@ -60,11 +60,11 @@ router.delete('/:id', controller.delete);   // ✅ FALTAVA
  *                 example: "Cliente reporta lentidão na rede durante horário de pico"
  *               type:
  *                 type: string
- *                 enum: [DIAGNOSTICO, MANUTENCAO, CONFIGURACAO, INSTALACAO, OUTRO]  // ✅ UPPERCASE
+ *                 enum: [DIAGNOSTICO, MANUTENCAO, CONFIGURACAO, INSTALACAO, OUTRO]
  *                 example: "DIAGNOSTICO"
  *               status:
  *                 type: string
- *                 enum: [PENDENTE, EM_ANDAMENTO, CONCLUIDA, CANCELADA]  // ✅ UPPERCASE
+ *                 enum: [PENDENTE, EM_ANDAMENTO, CONCLUIDA, CANCELADA]
  *                 example: "PENDENTE"
  *               providerId:
  *                 type: integer
